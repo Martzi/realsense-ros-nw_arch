@@ -214,7 +214,6 @@ aluminum peripherial evaluation case.
     </xacro:if>
 
     <yang>
-      <!-- L2 network topology -->
       <xacro:macro name="usb30_L2" params="L1_id:=alma L2_id:=barack L1_network_id:=citrom L2_network_id:=dinnye">
       
         <nw:network>
