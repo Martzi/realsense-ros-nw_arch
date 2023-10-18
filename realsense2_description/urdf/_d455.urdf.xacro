@@ -21,9 +21,9 @@ This is the URDF model for the Intel RealSense 430 camera, in its
 aluminum peripherial evaluation case.
 -->
 
-<robot name="sensor_d455" xmlns:xacro="http://ros.org/wiki/xacro"
-       xmlns:nw="urn:template-network"
-       xmlns:nt="urn:network-topology"
+<robot name="sensor_d455"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+       xmlns:nw="urn:network"
        xmlns:l1t="urn:layer1"
        xmlns:l2t="urn:layer2">
 
@@ -32,7 +32,7 @@ aluminum peripherial evaluation case.
   <xacro:include filename="$(find realsense2_description)/urdf/_materials.urdf.xacro" />
   <xacro:include filename="$(find realsense2_description)/urdf/_usb_plug.urdf.xacro" />
 
-  <xacro:macro name="sensor_d455" params="parent *origin name:=camera use_nominal_extrinsics:=false L1_id L2_id L1_network_id L2_network_id">
+  <xacro:macro name="sensor_d455" params="parent *origin name:=camera use_nominal_extrinsics:=false">
     <xacro:arg name="add_plug" default="false" />
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
@@ -215,38 +215,40 @@ aluminum peripherial evaluation case.
 
     <yang>
       <!-- L2 network topology -->
-      <nw:network>
-        <nw:network-id>${L2_network_id}</nw:network-id>
-        <nw:network-types>
-          <l2t:l2-topology/>
-        </nw:network-types>
-        <nw:supporting-network>
-          <nw:network-ref>${L1_network_id}</nw:network-ref>
-        </nw:supporting-network>
-        <nw:node>
-          <nw:node-id>${L2_id}</nw:node-id>
-          <nw:supporting-node>
-            <nw:network-ref>${L1_network_id}</nw:network-ref>
-            <nw:node-ref>${L1_id}</nw:node-ref>
-          </nw:supporting-node>
-          <xacro:usb30_L2 id="usb_1" supporting_network="${L1_network_id}" supporting_node="${L1_id}" supporting_tp="usb_1"/>
-        </nw:node>
-      </nw:network>
+      <xacro:macro name="usb30_L2" params="L1_id:=alma L2_id:=barack L1_network_id:=citrom L2_network_id:=dinnye">
+      
+        <nw:network>
+          <nw:network-id name="${L2_network_id}"/>
+          <nw:network-types>
+            <l2t:l2-topology/>
+          </nw:network-types>
+          <nw:supporting-network>
+            <nw:network-ref name="${L1_network_id}"/>
+          </nw:supporting-network>
+          <nw:node>
+            <nw:node-id name="${L2_id}"/>
+            <nw:supporting-node>
+              <nw:network-ref name="${L1_network_id}"/>
+              <nw:node-ref name="${L1_id}"/>
+            </nw:supporting-node>
+            <xacro:usb30_L2 id="usb_1" supporting_network="${L1_network_id}" supporting_node="${L1_id}" supporting_tp="usb_1"/>
+          </nw:node>
 
-      <!-- Physical network topology -->
-      <nw:network>
-        <nw:network-id>${L1_network_id}</nw:network-id>
-        <nw:network-types>
-          <l1t:l1-topology/>
-        </nw:network-types>
-        <nw:node>
-          <nw:node-id>${L1_id}</nw:node-id>
-          <l1t:l1-node-attributes>
-            <l1t:device-type>camera</l1t:device-type>
-          </l1t:l1-node-attributes>
-          <xacro:usb30_L1 id="usb_1"/>
-        </nw:node>
-      </nw:network>
+          <nw:network-id name="${L1_network_id}"/>
+          
+          <nw:network-types>
+            <l1t:l1-topology/>
+          </nw:network-types>
+          
+          <nw:node id="${L1_id}">
+            <l1t:l1-node-attributes>
+              <l1t:device-type name="camera"/>
+            </l1t:l1-node-attributes>
+            <xacro:usb30_L1 id="usb_1"/>
+          </nw:node>
+
+        </nw:network>
+      </xacro:macro>
     </yang>
 
   </xacro:macro>
