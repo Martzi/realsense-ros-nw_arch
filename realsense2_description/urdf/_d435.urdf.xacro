@@ -22,8 +22,7 @@ aluminum peripherial evaluation case.
 -->
 
 <robot name="sensor_d435" xmlns:xacro="http://ros.org/wiki/xacro"
-       xmlns:nw="urn:template-network"
-       xmlns:nt="urn:network-topology"
+       xmlns:nw="urn:network"
        xmlns:l1t="urn:layer1"
        xmlns:l2t="urn:layer2">
   <!-- Includes -->
@@ -31,7 +30,7 @@ aluminum peripherial evaluation case.
   <xacro:include filename="$(find realsense2_description)/urdf/_usb_plug.urdf.xacro" />
   <xacro:include filename="$(find interface-description)/urdf/usb30.urdf.xacro" />
 
-  <xacro:macro name="sensor_d435" params="parent *origin name:=camera use_nominal_extrinsics:=false add_plug:=false use_mesh:=true L1_id L2_id L1_network_id L2_network_id">
+  <xacro:macro name="sensor_d435" params="parent *origin name:=camera use_nominal_extrinsics:=false add_plug:=false use_mesh:=true L1_id:=alma L2_id:=barack L1_network_id:=citrom L2_network_id:=dinnye">
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
     <!-- The following values are approximate, and the camera node
