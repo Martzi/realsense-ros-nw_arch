@@ -36,6 +36,7 @@ def generate_launch_description():
     rviz_config_dir = os.path.join(get_package_share_directory('realsense2_description'), 'rviz', 'urdf.rviz')
     xacro_path = os.path.join(get_package_share_directory('realsense2_description'), 'urdf', params['model'])
     urdf = to_urdf(xacro_path, {'use_nominal_extrinsics': 'true', 'add_plug': 'true'})
+    
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',
