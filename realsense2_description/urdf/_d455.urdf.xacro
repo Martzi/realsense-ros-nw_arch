@@ -286,7 +286,7 @@ aluminum peripherial evaluation case.
             <nw:node-id name="/camera/camera/color/camera_raw"/>
             <ros:ros-node-attributes>
               <ros:ros-node-type>topic</ros:ros-node-type>
-              <ros:topic-type name="sensor_msgs/msg/Image"/>
+              <ros:topic-type name="sensor_msgs/msg/Image" hz="100" bw="50"/>
             </ros:ros-node-attributes>
             <nt:termination-point>
               <nt:tp-id>pub</nt:tp-id>
@@ -301,7 +301,7 @@ aluminum peripherial evaluation case.
             <nw:node-id name="/camera/camera/color/camera_info"/>
             <ros:ros-node-attributes>
               <ros:ros-node-type>topic</ros:ros-node-type>
-              <ros:topic-type name="sensor_msgs/msg/CameraInfo"/>
+              <ros:topic-type name="sensor_msgs/msg/CameraInfo" hz="100" bw="50" />
             </ros:ros-node-attributes>
             <nt:termination-point>
               <nt:tp-id>pub</nt:tp-id>
@@ -316,7 +316,7 @@ aluminum peripherial evaluation case.
             <nw:node-id name="/camera/camera/aligned_depth_to_color/image_raw"/>
             <ros:ros-node-attributes>
               <ros:ros-node-type>topic</ros:ros-node-type>
-              <ros:topic-type name="sensor_msgs/msg/Image"/>
+              <ros:topic-type name="sensor_msgs/msg/Image" hz="100" bw="50"/>
             </ros:ros-node-attributes>
             <nt:termination-point>
               <nt:tp-id>pub</nt:tp-id>
@@ -331,7 +331,7 @@ aluminum peripherial evaluation case.
             <nw:node-id name="/camera/camera/depth/camera_info"/>
             <ros:ros-node-attributes>
               <ros:ros-node-type>topic</ros:ros-node-type>
-              <ros:topic-type name="sensor_msgs/msg/CameraInfo"/>
+              <ros:topic-type name="sensor_msgs/msg/CameraInfo" hz="100" bw="50"/>
             </ros:ros-node-attributes>
             <nt:termination-point>
               <nt:tp-id>pub</nt:tp-id>
@@ -346,7 +346,7 @@ aluminum peripherial evaluation case.
             <nw:node-id name="tf_static"/>
             <ros:ros-node-attributes>
               <ros:ros-node-type>topic</ros:ros-node-type>
-              <ros:topic-type name="tf2_msgs/msg/TFMessage"/>
+              <ros:topic-type name="tf2_msgs/msg/TFMessage" hz="100" bw="50"/>
             </ros:ros-node-attributes>
             <nt:termination-point>
               <nt:tp-id>pub</nt:tp-id>
