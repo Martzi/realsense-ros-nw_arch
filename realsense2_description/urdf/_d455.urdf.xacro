@@ -24,8 +24,10 @@ aluminum peripherial evaluation case.
 <robot name="sensor_d455"
        xmlns:xacro="http://ros.org/wiki/xacro"
        xmlns:nw="urn:network"
+       xmlns:nt="urn:network-topology"
        xmlns:l1t="urn:layer1"
-       xmlns:l2t="urn:layer2">
+       xmlns:l2t="urn:layer2"
+       xmlns:ros="urn:ros">
 
 
   <!-- Includes -->
@@ -255,27 +257,27 @@ aluminum peripherial evaluation case.
 
           <!-- publishes to -->
           <nt:link> 
-            <nt:link-id name="camera_publisher"/> 
+            <nt:link-id name="camera_publisher"/> <!-- ??? ez jó? -->
             <nt:source>
               <nt:source-node name="realsense2_camera"/>
               <nt:source-tp>pub</nt:source-tp>
             </nt:source>
             <nt:destination>
               <nt:dest-node>img_proc</nt:dest-node>
-              <nt:dest-tp>pub</nt:dest-tp> 
+              <nt:dest-tp>pub</nt:dest-tp> <!-- ??? ez mi? -->
             </nt:destination>
           </nt:link>
 
            <!-- publishes to -->
           <nt:link>
-            <nt:link-id name="model_node"/> 
+            <nt:link-id name="model_node"/> <!-- ??? ez jó? -->
             <nt:source>
               <nt:source-node name="robot_state_publisher"/>
               <nt:source-tp>pub</nt:source-tp>
             </nt:source>
             <nt:destination>
-              <nt:dest-node>transform</nt:dest-node> 
-              <nt:dest-tp>pub</nt:dest-tp> 
+              <nt:dest-node>transform</nt:dest-node> <!-- ??? ez mi? -->
+              <nt:dest-tp>pub</nt:dest-tp> <!-- ??? ez mi? -->
             </nt:destination>
           </nt:link>
 
@@ -283,7 +285,7 @@ aluminum peripherial evaluation case.
           <nw:node>
             <nw:node-id name="/camera/camera/color/camera_raw"/>
             <ros:ros-node-attributes>
-              <ros:ros-node-type name=>topic</ros:ros-node-type>
+              <ros:ros-node-type>topic</ros:ros-node-type>
               <ros:topic-type name="sensor_msgs/msg/Image"/>
             </ros:ros-node-attributes>
             <nt:termination-point>
@@ -298,7 +300,7 @@ aluminum peripherial evaluation case.
           <nw:node>
             <nw:node-id name="/camera/camera/color/camera_info"/>
             <ros:ros-node-attributes>
-              <ros:ros-node-type name=>topic</ros:ros-node-type>
+              <ros:ros-node-type>topic</ros:ros-node-type>
               <ros:topic-type name="sensor_msgs/msg/CameraInfo"/>
             </ros:ros-node-attributes>
             <nt:termination-point>
@@ -313,7 +315,7 @@ aluminum peripherial evaluation case.
           <nw:node>
             <nw:node-id name="/camera/camera/aligned_depth_to_color/image_raw"/>
             <ros:ros-node-attributes>
-              <ros:ros-node-type name=>topic</ros:ros-node-type>
+              <ros:ros-node-type>topic</ros:ros-node-type>
               <ros:topic-type name="sensor_msgs/msg/Image"/>
             </ros:ros-node-attributes>
             <nt:termination-point>
@@ -328,7 +330,7 @@ aluminum peripherial evaluation case.
           <nw:node>
             <nw:node-id name="/camera/camera/depth/camera_info"/>
             <ros:ros-node-attributes>
-              <ros:ros-node-type name=>topic</ros:ros-node-type>
+              <ros:ros-node-type>topic</ros:ros-node-type>
               <ros:topic-type name="sensor_msgs/msg/CameraInfo"/>
             </ros:ros-node-attributes>
             <nt:termination-point>
