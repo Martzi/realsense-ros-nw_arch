@@ -214,7 +214,7 @@ aluminum peripherial evaluation case.
     </xacro:if>
 
     <yang>
-      <xacro:macro name="usb30_L2" params="L1_id:=alma L2_id:=barack L1_network_id:=citrom L2_network_id:=dinnye">
+      <xacro:macro name="sensor_d455" params="L2_network_id:=Data_Link L1_network_id:=Physical L2_id:=d455_Cam_L2 L1_id:=d455_Cam_L1 L3_network_id:=d455_Cam_ROS L3_id:=realsense2_camera">
       
         <nw:network>
           <nw:network-id name="${L2_network_id}"/>
@@ -234,16 +234,124 @@ aluminum peripherial evaluation case.
           </nw:node>
 
           <nw:network-id name="${L1_network_id}"/>
-          
           <nw:network-types>
             <l1t:l1-topology/>
           </nw:network-types>
-          
           <nw:node id="${L1_id}">
             <l1t:l1-node-attributes>
               <l1t:device-type name="camera"/>
             </l1t:l1-node-attributes>
             <xacro:usb30_L1 id="usb_1"/>
+          </nw:node>
+
+          <!-- ROS node graph -->
+          <nw:network-id name="${L3_network_id}"/>
+          <nw:network-types>
+            <ros:ros-node-graph/>
+          </nw:network-types>
+          <nw:supporting-network>
+            <nw:network-ref name="${L2_network_id}"/>
+          </nw:supporting-network>
+
+          <!-- publishes to -->
+          <nt:link> 
+            <nt:link-id name="camera_publisher"/> 
+            <nt:source>
+              <nt:source-node name="realsense2_camera"/>
+              <nt:source-tp>pub</nt:source-tp>
+            </nt:source>
+            <nt:destination>
+              <nt:dest-node>img_proc</nt:dest-node>
+              <nt:dest-tp>pub</nt:dest-tp> 
+            </nt:destination>
+          </nt:link>
+
+           <!-- publishes to -->
+          <nt:link>
+            <nt:link-id name="model_node"/> 
+            <nt:source>
+              <nt:source-node name="robot_state_publisher"/>
+              <nt:source-tp>pub</nt:source-tp>
+            </nt:source>
+            <nt:destination>
+              <nt:dest-node>transform</nt:dest-node> 
+              <nt:dest-tp>pub</nt:dest-tp> 
+            </nt:destination>
+          </nt:link>
+
+          <!-- color image topic -->
+          <nw:node>
+            <nw:node-id name="/camera/camera/color/camera_raw"/>
+            <ros:ros-node-attributes>
+              <ros:ros-node-type name=>topic</ros:ros-node-type>
+              <ros:topic-type name="sensor_msgs/msg/Image"/>
+            </ros:ros-node-attributes>
+            <nt:termination-point>
+              <nt:tp-id>pub</nt:tp-id>
+            </nt:termination-point>
+            <nt:termination-point>
+              <nt:tp-id>sub</nt:tp-id>
+            </nt:termination-point>
+          </nw:node>
+
+          <!-- color camera info topic -->
+          <nw:node>
+            <nw:node-id name="/camera/camera/color/camera_info"/>
+            <ros:ros-node-attributes>
+              <ros:ros-node-type name=>topic</ros:ros-node-type>
+              <ros:topic-type name="sensor_msgs/msg/CameraInfo"/>
+            </ros:ros-node-attributes>
+            <nt:termination-point>
+              <nt:tp-id>pub</nt:tp-id>
+            </nt:termination-point>
+            <nt:termination-point>
+              <nt:tp-id>sub</nt:tp-id>
+            </nt:termination-point>
+          </nw:node>
+
+          <!-- depth image topic -->
+          <nw:node>
+            <nw:node-id name="/camera/camera/aligned_depth_to_color/image_raw"/>
+            <ros:ros-node-attributes>
+              <ros:ros-node-type name=>topic</ros:ros-node-type>
+              <ros:topic-type name="sensor_msgs/msg/Image"/>
+            </ros:ros-node-attributes>
+            <nt:termination-point>
+              <nt:tp-id>pub</nt:tp-id>
+            </nt:termination-point>
+            <nt:termination-point>
+              <nt:tp-id>sub</nt:tp-id>
+            </nt:termination-point>
+          </nw:node>
+
+          <!-- depth camera info topic -->
+          <nw:node>
+            <nw:node-id name="/camera/camera/depth/camera_info"/>
+            <ros:ros-node-attributes>
+              <ros:ros-node-type name=>topic</ros:ros-node-type>
+              <ros:topic-type name="sensor_msgs/msg/CameraInfo"/>
+            </ros:ros-node-attributes>
+            <nt:termination-point>
+              <nt:tp-id>pub</nt:tp-id>
+            </nt:termination-point>
+            <nt:termination-point>
+              <nt:tp-id>sub</nt:tp-id>
+            </nt:termination-point>
+          </nw:node>
+
+          <!-- TF topic -->
+          <nw:node>
+            <nw:node-id name="tf_static"/>
+            <ros:ros-node-attributes>
+              <ros:ros-node-type>topic</ros:ros-node-type>
+              <ros:topic-type name="tf2_msgs/msg/TFMessage"/>
+            </ros:ros-node-attributes>
+            <nt:termination-point>
+              <nt:tp-id>pub</nt:tp-id>
+            </nt:termination-point>
+            <nt:termination-point>
+              <nt:tp-id>sub</nt:tp-id>
+            </nt:termination-point>
           </nw:node>
 
         </nw:network>
