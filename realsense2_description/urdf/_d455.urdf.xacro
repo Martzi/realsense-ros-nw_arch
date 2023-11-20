@@ -34,7 +34,7 @@ aluminum peripherial evaluation case.
   <xacro:include filename="$(find realsense2_description)/urdf/_materials.urdf.xacro" />
   <xacro:include filename="$(find realsense2_description)/urdf/_usb_plug.urdf.xacro" />
 
-  <xacro:macro name="sensor_d455" params="parent *origin name:=camera use_nominal_extrinsics:=false">
+  <xacro:macro name="sensor_d455" params="parent *origin name:=camera use_nominal_extrinsics:=false L2_network_id:=Data_Link L1_network_id:=Physical L2_id:=d455_Cam_L2 L1_id:=d455_Cam_L1 L3_network_id:=d455_Cam_ROS L3_id:=realsense2_camera">
     <xacro:arg name="add_plug" default="false" />
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
@@ -230,6 +230,10 @@ aluminum peripherial evaluation case.
           <ros:ros-node-attributes>
             <ros:ros-node-type>node</ros:ros-node-type>
           </ros:ros-node-attributes>
+          <nw:supporting-node>
+            <nw:network-ref>${L2_network_id}</nw:network-ref>
+            <nw:node-ref>${L2_id}</nw:node-ref>
+          </nw:supporting-node>
           <nt:termination-point>
             <nt:tp-id>pub</nt:tp-id>
           </nt:termination-point>
@@ -282,7 +286,7 @@ aluminum peripherial evaluation case.
         <nw:node>
           <nw:node-id>${L2_id}</nw:node-id>
           <nw:supporting-node>
-            <nw:network-ref>${L2_id}</nw:network-ref>
+            <nw:network-ref>${L1_network_id}</nw:network-ref>
             <nw:node-ref>${L1_id}</nw:node-ref>
           </nw:supporting-node>
           <xacro:usb30_L2 id="usb_1" supporting_network="${L1_network_id}" supporting_node="${L1_id}" supporting_tp="usb_1"/>
