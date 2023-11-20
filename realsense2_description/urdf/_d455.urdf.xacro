@@ -217,7 +217,7 @@ aluminum peripherial evaluation case.
 
     <yang>
       <xacro:macro name="sensor_d455" params="L2_network_id:=Data_Link L1_network_id:=Physical L2_id:=d455_Cam_L2 L1_id:=d455_Cam_L1 L3_network_id:=d455_Cam_ROS L3_id:=realsense2_camera">
-        
+
           <nw:network-id name="${L2_network_id}"/>
           <nw:network-types>
             <l2t:l2-topology/>
@@ -296,6 +296,7 @@ aluminum peripherial evaluation case.
 
       </xacro:macro>
     </yang>
+
 
   </xacro:macro>
 </robot>
