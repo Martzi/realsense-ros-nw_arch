@@ -216,85 +216,92 @@ aluminum peripherial evaluation case.
     </xacro:if>
 
     <yang>
-      <xacro:macro name="sensor_d455" params="L2_network_id:=Data_Link L1_network_id:=Physical L2_id:=d455_Cam_L2 L1_id:=d455_Cam_L1 L3_network_id:=d455_Cam_ROS L3_id:=realsense2_camera">
+      <nw:network>
+        <nw:network-id>ros</nw:network-id>
+        <nw:network-types>
+          <ros:ros-node-graph/>
+        </nw:network-types>
+        <nw:supporting-network>
+          <nw:network-ref>${L2_network_id}</nw:network-ref>
+        </nw:supporting-network>
 
-          <nw:network-id name="${L2_network_id}"/>
-          <nw:network-types>
-            <l2t:l2-topology/>
-          </nw:network-types>
-          <nw:supporting-network>
-            <nw:network-ref name="${L1_network_id}"/>
-          </nw:supporting-network>
-          <nw:node>
-            <nw:node-id name="${L2_id}"/>
-            <nw:supporting-node>
-              <nw:network-ref name="${L1_network_id}"/>
-              <nw:node-ref name="${L1_id}"/>
-            </nw:supporting-node>
-            <xacro:usb30_L2 id="usb_1" supporting_network="${L1_network_id}" supporting_node="${L1_id}" supporting_tp="usb_1"/>
-          </nw:node>
+        <nw:node> <!-- /camera/realsense2_camera ROS node -->
+          <nw:node-id>realsense2-camera</nw:node-id> <!--(node-name)-->
+          <ros:ros-node-attributes>
+            <ros:ros-node-type>node</ros:ros-node-type>
+          </ros:ros-node-attributes>
+          <nt:termination-point>
+            <nt:tp-id>pub</nt:tp-id>
+          </nt:termination-point>
+          <nt:termination-point>
+            <nt:tp-id>sub</nt:tp-id>
+          </nt:termination-point>
+        </nw:node>
 
-          <nw:network-id name="${L1_network_id}"/>
-          <nw:network-types>
-            <l1t:l1-topology/>
-          </nw:network-types>
-          <nw:node id="${L1_id}">
-            <l1t:l1-node-attributes>
-              <l1t:device-type name="camera"/>
-            </l1t:l1-node-attributes>
-            <xacro:usb30_L1 id="usb_1"/>
-          </nw:node>
+        <nw:node> <!-- /tf_static topic -->
+          <nw:node-id>/camera/color/image_raw</nw:node-id>
+          <ros:ros-node-attributes>
+            <ros:ros-node-type>topic</ros:ros-node-type>
+            <ros:topic-type>sensor_msgs/msg/Image</ros:topic-type>
+            <ros:hz>30</ros:hz>
+            <ros:bw>83.34MB/s</ros:bw>
+          </ros:ros-node-attributes>
+          <nt:termination-point>
+            <nt:tp-id>pub</nt:tp-id>
+          </nt:termination-point>
+          <nt:termination-point>
+            <nt:tp-id>sub</nt:tp-id>
+          </nt:termination-point>
+        </nw:node>
 
-          <nw:network-id name="ros"/>
-          <nw:network-types>
-            <ros:ros-node-graph/>
-          </nw:network-types>
-          <nw:supporting-network>
-            <nw:network-ref name="${L2_network_id}"/>
-          </nw:supporting-network>
+        <nw:node> <!-- /tf_static topic -->
+          <nw:node-id>/camera/depth/image_rect_raw</nw:node-id>
+          <ros:ros-node-attributes>
+            <ros:ros-node-type>topic</ros:ros-node-type>
+            <ros:topic-type>sensor_msgs/msg/Image</ros:topic-type>
+            <ros:hz>30</ros:hz>
+            <ros:bw>24.59MB/s</ros:bw>
+          </ros:ros-node-attributes>
+          <nt:termination-point>
+            <nt:tp-id>pub</nt:tp-id>
+          </nt:termination-point>
+          <nt:termination-point>
+            <nt:tp-id>sub</nt:tp-id>
+          </nt:termination-point>
+        </nw:node>
+      </nw:network>
 
-          <nw:node> <!-- /camera/realsense2_camera ROS node -->
-            <nw:node-id name="realsense2-camera" /> <!--(node-name)-->
-            <ros:ros-node-attributes>
-              <ros:ros-node-type>node</ros:ros-node-type>
-            </ros:ros-node-attributes>  
-            <nt:termination-point>
-              <nt:tp-id>pub</nt:tp-id>
-            </nt:termination-point>
-            <nt:termination-point>
-              <nt:tp-id>sub</nt:tp-id>
-            </nt:termination-point>
-          </nw:node>
+      <nw:network>
+        <nw:network-id>${L2_network_id}</nw:network-id>
+        <nw:network-types>
+          <l2t:l2-topology/>
+        </nw:network-types>
+        <nw:supporting-network>
+          <nw:network-ref>${L1_network_id}</nw:network-ref>
+        </nw:supporting-network>
+        <nw:node>
+          <nw:node-id>${L2_id}</nw:node-id>
+          <nw:supporting-node>
+            <nw:network-ref>${L2_id}</nw:network-ref>
+            <nw:node-ref>${L1_id}</nw:node-ref>
+          </nw:supporting-node>
+          <xacro:usb30_L2 id="usb_1" supporting_network="${L1_network_id}" supporting_node="${L1_id}" supporting_tp="usb_1"/>
+        </nw:node>
+      </nw:network>
 
-          <nw:node> <!-- /tf_static topic -->
-            <nw:node-id name="/camera/color/image_raw" />
-            <ros:ros-node-attributes>
-              <ros:ros-node-type>topic</ros:ros-node-type>
-              <ros:topic-type name="sensor_msgs/msg/Image" hz="30" bw="83.34MB/s"/>
-            </ros:ros-node-attributes>
-            <nt:termination-point>
-              <nt:tp-id>pub</nt:tp-id>
-            </nt:termination-point>
-            <nt:termination-point>
-              <nt:tp-id>sub</nt:tp-id>
-            </nt:termination-point>
-          </nw:node>
-
-          <nw:node> <!-- /tf_static topic -->
-            <nw:node-id name="/camera/depth/image_rect_raw" />
-            <ros:ros-node-attributes>
-              <ros:ros-node-type>topic</ros:ros-node-type>
-              <ros:topic-type name="sensor_msgs/msg/Image" hz="30" bw="24.59MB/s"/>
-            </ros:ros-node-attributes>
-            <nt:termination-point>
-              <nt:tp-id>pub</nt:tp-id>
-            </nt:termination-point>
-            <nt:termination-point>
-              <nt:tp-id>sub</nt:tp-id>
-            </nt:termination-point>
-          </nw:node>
-
-      </xacro:macro>
+      <nw:network>
+        <nw:network-id>${L1_network_id}</nw:network-id>
+        <nw:network-types>
+          <l1t:l1-topology/>
+        </nw:network-types>
+        <nw:node>
+          <nw:node-id>${L1_id}</nw:node-id>
+          <l1t:l1-node-attributes>
+            <l1t:device-type>camera</l1t:device-type>
+          </l1t:l1-node-attributes>
+          <xacro:usb30_L1 id="usb_1"/>
+        </nw:node>
+      </nw:network>
     </yang>
 
 
