@@ -174,7 +174,7 @@ aluminum peripherial evaluation case.
     </xacro:if>
 
     <yang>
-      <!-- L2 network topology -->
+      <!-- Realsense D435i L2 network topology -->
       <nw:network>
         <nw:network-id>${L2_network_id}</nw:network-id>
         <nw:network-types>
@@ -189,11 +189,11 @@ aluminum peripherial evaluation case.
             <nw:network-ref>${L1_network_id}</nw:network-ref>
             <nw:node-ref>${L1_id}</nw:node-ref>
           </nw:supporting-node>
-          <xacro:usb30_L2 id="usb_1" supporting_network="${L1_network_id}" supporting_node="${L1_id}" supporting_tp="usb_1"/>
+          <xacro:usb30_L2 id="usb_1" supporting_network="${L1_network_id}" supporting_node="${L1_id}" supporting_tp="usb-typec_1"/>
         </nw:node>
       </nw:network>
 
-      <!-- Physical network topology -->
+      <!-- Realsense D435i L1 network topology -->
       <nw:network>
         <nw:network-id>${L1_network_id}</nw:network-id>
         <nw:network-types>
@@ -204,7 +204,7 @@ aluminum peripherial evaluation case.
           <l1t:l1-node-attributes>
             <l1t:device-type>camera</l1t:device-type>
           </l1t:l1-node-attributes>
-          <xacro:usb30_L1 id="usb_1"/>
+          <xacro:usb30_L1 id="usb-typec_1"/>
         </nw:node>
       </nw:network>
     </yang>
