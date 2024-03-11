@@ -30,7 +30,7 @@ aluminum peripherial evaluation case.
   <xacro:include filename="$(find realsense2_description)/urdf/_usb_plug.urdf.xacro" />
   <xacro:include filename="$(find interface-description)/urdf/usb30.urdf.xacro" />
 
-  <xacro:macro name="sensor_d435" params="parent *origin name:=camera use_nominal_extrinsics:=false add_plug:=false use_mesh:=true L1_id:=d435_L1 L2_id:=d435_L2 L1_network_id:=Physical L2_network_id:=Data_Link">
+  <xacro:macro name="sensor_d435" params="parent *origin name:=camera use_nominal_extrinsics:=false add_plug:=false use_mesh:=true L2_network_id:=network_level L1_network_id:=device_level L2_id:=sensor_d435_L2 L1_id:=sensor_d435_L1">
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
     <!-- The following values are approximate, and the camera node
