@@ -34,7 +34,7 @@ aluminum peripherial evaluation case.
   <xacro:include filename="$(find realsense2_description)/urdf/_materials.urdf.xacro" />
   <xacro:include filename="$(find realsense2_description)/urdf/_usb_plug.urdf.xacro" />
 
-  <xacro:macro name="sensor_d455" params="parent *origin name:=camera use_nominal_extrinsics:=false L2_network_id:=Data_Link L1_network_id:=Physical L2_id:=d455_Cam_L2 L1_id:=d455_Cam_L1 L3_network_id:=d455_Cam_ROS L3_id:=realsense2_camera">
+  <xacro:macro name="sensor_d455" params="parent *origin name:=camera use_nominal_extrinsics:=false L2_network_id:=network_level L1_network_id:=device_level L2_id:=sensor_d455_L2 L1_id:=sensor_d455_L1">
     <xacro:arg name="add_plug" default="false" />
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
@@ -216,65 +216,6 @@ aluminum peripherial evaluation case.
     </xacro:if>
 
     <yang>
-      <nw:network>
-        <nw:network-id>ros</nw:network-id>
-        <nw:network-types>
-          <ros:ros-node-graph/>
-        </nw:network-types>
-        <nw:supporting-network>
-          <nw:network-ref>${L2_network_id}</nw:network-ref>
-        </nw:supporting-network>
-
-        <nw:node> <!-- /camera/realsense2_camera ROS node -->
-          <nw:node-id>realsense2-camera</nw:node-id> <!--(node-name)-->
-          <ros:ros-node-attributes>
-            <ros:ros-node-type>node</ros:ros-node-type>
-          </ros:ros-node-attributes>
-          <nw:supporting-node>
-            <nw:network-ref>${L2_network_id}</nw:network-ref>
-            <nw:node-ref>${L2_id}</nw:node-ref>
-          </nw:supporting-node>
-          <nt:termination-point>
-            <nt:tp-id>pub</nt:tp-id>
-          </nt:termination-point>
-          <nt:termination-point>
-            <nt:tp-id>sub</nt:tp-id>
-          </nt:termination-point>
-        </nw:node>
-
-        <nw:node> <!-- /tf_static topic -->
-          <nw:node-id>/camera/color/image_raw</nw:node-id>
-          <ros:ros-node-attributes>
-            <ros:ros-node-type>topic</ros:ros-node-type>
-            <ros:topic-type>sensor_msgs/msg/Image</ros:topic-type>
-            <ros:hz>30</ros:hz>
-            <ros:bw>83.34MB/s</ros:bw>
-          </ros:ros-node-attributes>
-          <nt:termination-point>
-            <nt:tp-id>pub</nt:tp-id>
-          </nt:termination-point>
-          <nt:termination-point>
-            <nt:tp-id>sub</nt:tp-id>
-          </nt:termination-point>
-        </nw:node>
-
-        <nw:node> <!-- /tf_static topic -->
-          <nw:node-id>/camera/depth/image_rect_raw</nw:node-id>
-          <ros:ros-node-attributes>
-            <ros:ros-node-type>topic</ros:ros-node-type>
-            <ros:topic-type>sensor_msgs/msg/Image</ros:topic-type>
-            <ros:hz>30</ros:hz>
-            <ros:bw>24.59MB/s</ros:bw>
-          </ros:ros-node-attributes>
-          <nt:termination-point>
-            <nt:tp-id>pub</nt:tp-id>
-          </nt:termination-point>
-          <nt:termination-point>
-            <nt:tp-id>sub</nt:tp-id>
-          </nt:termination-point>
-        </nw:node>
-      </nw:network>
-
       <nw:network>
         <nw:network-id>${L2_network_id}</nw:network-id>
         <nw:network-types>
