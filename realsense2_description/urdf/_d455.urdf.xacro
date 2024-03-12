@@ -26,8 +26,7 @@ aluminum peripherial evaluation case.
        xmlns:nw="urn:robot-network"
        xmlns:nt="urn:robot-network-topology"
        xmlns:l1t="urn:layer1"
-       xmlns:l2t="urn:layer2"
-       xmlns:ros="urn:ros">
+       xmlns:l2t="urn:layer2">
 
 
   <!-- Includes -->
@@ -248,7 +247,6 @@ aluminum peripherial evaluation case.
         </nw:node>
       </nw:network>
     </yang>
-
 
   </xacro:macro>
 </robot>
