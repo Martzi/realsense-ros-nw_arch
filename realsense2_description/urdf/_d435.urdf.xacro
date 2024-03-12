@@ -204,7 +204,7 @@ aluminum peripherial evaluation case.
           <l1t:l1-node-attributes>
             <l1t:device-type>camera</l1t:device-type>
           </l1t:l1-node-attributes>
-          <xacro:usb30_L1 id="usb-typec_1"/>
+          <xacro:usb30_L1 id="usb_1" connector_type="usb_type-C" connector_format="female"/>
         </nw:node>
       </nw:network>
     </yang>
