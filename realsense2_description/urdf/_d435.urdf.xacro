@@ -22,7 +22,7 @@ aluminum peripherial evaluation case.
 -->
 
 <robot name="sensor_d435" xmlns:xacro="http://ros.org/wiki/xacro"
-       xmlns:nw="urn:network"
+       xmlns:nw="urn:robot-network"
        xmlns:l1t="urn:layer1"
        xmlns:l2t="urn:layer2">
   <!-- Includes -->

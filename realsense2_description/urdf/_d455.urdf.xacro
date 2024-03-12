@@ -23,8 +23,8 @@ aluminum peripherial evaluation case.
 
 <robot name="sensor_d455"
        xmlns:xacro="http://ros.org/wiki/xacro"
-       xmlns:nw="urn:network"
-       xmlns:nt="urn:network-topology"
+       xmlns:nw="urn:robot-network"
+       xmlns:nt="urn:robot-network-topology"
        xmlns:l1t="urn:layer1"
        xmlns:l2t="urn:layer2"
        xmlns:ros="urn:ros">
