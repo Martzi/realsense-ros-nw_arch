@@ -22,9 +22,7 @@ aluminum peripherial evaluation case.
 -->
 
 <robot name="sensor_d435" xmlns:xacro="http://ros.org/wiki/xacro"
-       xmlns:nw="urn:network"
-       xmlns:l1t="urn:layer1"
-       xmlns:l2t="urn:layer2">
+       xmlns:layer1="urn:ietf:params:xml:ns:yang:layer1">
   <!-- Includes -->
   <xacro:include filename="$(find realsense2_description)/urdf/_materials.urdf.xacro" />
   <xacro:include filename="$(find realsense2_description)/urdf/_usb_plug.urdf.xacro" />
@@ -175,38 +173,33 @@ aluminum peripherial evaluation case.
 
     <yang>
       <!-- Realsense D435i L2 network topology -->
-      <nw:network>
-        <nw:network-id>${L2_network_id}</nw:network-id>
-        <nw:network-types>
-          <l2t:l2-topology/>
-        </nw:network-types>
-        <nw:supporting-network>
-          <nw:network-ref>${L1_network_id}</nw:network-ref>
-        </nw:supporting-network>
-        <nw:node>
-          <nw:node-id>${L2_id}</nw:node-id>
-          <nw:supporting-node>
-            <nw:network-ref>${L1_network_id}</nw:network-ref>
-            <nw:node-ref>${L1_id}</nw:node-ref>
-          </nw:supporting-node>
+      <network>
+        <network-id>${L2_network_id}</network-id>
+        <supporting-network>
+          <network-ref>${L1_network_id}</network-ref>
+          <tf-parent>${parent}</tf-parent>
+        </supporting-network>
+        <node>
+          <node-id>${L2_id}</node-id>
+          <supporting-node>
+            <network-ref>${L1_network_id}</network-ref>
+            <node-ref>${L1_id}</node-ref>
+          </supporting-node>
           <xacro:usb30_L2 id="usb_1" supporting_network="${L1_network_id}" supporting_node="${L1_id}" supporting_tp="usb-typec_1"/>
-        </nw:node>
-      </nw:network>
+        </node>
+      </network>
 
       <!-- Realsense D435i L1 network topology -->
-      <nw:network>
-        <nw:network-id>${L1_network_id}</nw:network-id>
-        <nw:network-types>
-          <l1t:l1-topology/>
-        </nw:network-types>
-        <nw:node>
-          <nw:node-id>${L1_id}</nw:node-id>
-          <l1t:l1-node-attributes>
-            <l1t:device-type>camera</l1t:device-type>
-          </l1t:l1-node-attributes>
-          <xacro:usb30_L1 id="usb-typec_1"/>
-        </nw:node>
-      </nw:network>
+      <network>
+        <network-id>${L1_network_id}</network-id>
+        <node>
+          <node-id>${L1_id}</node-id>
+          <layer1:l1-node-attributes>
+            <device-type>camera</device-type>
+          </layer1:l1-node-attributes>
+          <xacro:usb30_L1 id="usb_1" connector_type="usb_type-C" connector_format="female"/>
+        </node>
+      </network>
     </yang>
 
   </xacro:macro>
