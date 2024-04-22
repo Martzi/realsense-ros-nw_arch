@@ -23,14 +23,15 @@ aluminum peripherial evaluation case.
 
 <robot name="sensor_d455"
        xmlns:xacro="http://ros.org/wiki/xacro"
-       xmlns:layer1="urn:ietf:params:xml:ns:yang:layer1">
-
-
+       xmlns:layer1="urn:ietf:params:xml:ns:yang:layer1"
+       xmlns:layer2="urn:ietf:params:xml:ns:yang:layer2"
+       xmlns:robot-network="urn:ietf:params:xml:ns:yang:robot-network">
   <!-- Includes -->
   <xacro:include filename="$(find realsense2_description)/urdf/_materials.urdf.xacro" />
   <xacro:include filename="$(find realsense2_description)/urdf/_usb_plug.urdf.xacro" />
+  <xacro:include filename="$(find interface-description)/urdf/usb30.urdf.xacro" />
 
-  <xacro:macro name="sensor_d455" params="parent *origin name:=camera use_nominal_extrinsics:=false L2_network_id:=network_level L1_network_id:=device_level L2_id:=sensor_d455_L2 L1_id:=sensor_d455_L1">
+  <xacro:macro name="sensor_d455" params="parent *origin name:=camera use_nominal_extrinsics:=false L2_network_id:=sensor_d455_network_level L1_network_id:=sensor_d455_device_level L2_id:=sensor_d455_L2 L1_id:=sensor_d455_L1">
     <xacro:arg name="add_plug" default="false" />
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
@@ -39,7 +40,6 @@ aluminum peripherial evaluation case.
     <xacro:property name="d455_cam_depth_to_infra1_offset" value="0.0"/>
     <xacro:property name="d455_cam_depth_to_infra2_offset" value="-0.095"/>
     <xacro:property name="d455_cam_depth_to_color_offset" value="-0.059"/>
-
 
     <!-- The following values model the aluminum peripherial case for the
   	d455 camera, with the camera joint represented by the actual
@@ -212,8 +212,10 @@ aluminum peripherial evaluation case.
     </xacro:if>
 
     <yang>
-      <network>
+      <!-- Realsense D455 L2 network topology -->
+      <robot-network:networks>
         <network-id>${L2_network_id}</network-id>
+        <layer2:l2-topology><element>template</element></layer2:l2-topology>
         <supporting-network>
           <network-ref>${L1_network_id}</network-ref>
           <tf-parent>${parent}</tf-parent>
@@ -224,20 +226,24 @@ aluminum peripherial evaluation case.
             <network-ref>${L1_network_id}</network-ref>
             <node-ref>${L1_id}</node-ref>
           </supporting-node>
-          <xacro:usb30_L2 id="usb_1" supporting_network="${L1_network_id}" supporting_node="${L1_id}" supporting_tp="usb_1"/>
+          <xacro:usb30_L2 id="usb_1" supporting_network="${L1_network_id}" supporting_node="${L1_id}" supporting_tp="usb-typec_1"/>
         </node>
-      </network>
+      </robot-network:networks>
 
-      <network>
+      <!-- Realsense D455 L1 network topology -->
+      <robot-network:networks>
         <network-id>${L1_network_id}</network-id>
+        <layer1:l1-topology><element>template</element></layer1:l1-topology>
         <node>
           <node-id>${L1_id}</node-id>
           <layer1:l1-node-attributes>
             <device-type>camera</device-type>
+            <phy-port-num>2</phy-port-num>
+            <wireless-access>0</wireless-access>
           </layer1:l1-node-attributes>
           <xacro:usb30_L1 id="usb_1" connector_type="usb_type-C" connector_format="female"/>
         </node>
-      </network>
+      </robot-network:networks>
     </yang>
 
   </xacro:macro>

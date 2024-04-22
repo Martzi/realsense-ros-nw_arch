@@ -21,14 +21,18 @@ This is the URDF model for the Intel RealSense 430 camera, in its
 aluminum peripherial evaluation case.
 -->
 
-<robot name="sensor_d435" xmlns:xacro="http://ros.org/wiki/xacro"
-       xmlns:layer1="urn:ietf:params:xml:ns:yang:layer1">
+<robot name="sensor_d435" 
+       xmlns:xacro="http://ros.org/wiki/xacro"
+       xmlns:layer1="urn:ietf:params:xml:ns:yang:layer1"
+       xmlns:layer2="urn:ietf:params:xml:ns:yang:layer2"
+       xmlns:robot-network="urn:ietf:params:xml:ns:yang:robot-network">
   <!-- Includes -->
   <xacro:include filename="$(find realsense2_description)/urdf/_materials.urdf.xacro" />
   <xacro:include filename="$(find realsense2_description)/urdf/_usb_plug.urdf.xacro" />
   <xacro:include filename="$(find interface-description)/urdf/usb30.urdf.xacro" />
 
-  <xacro:macro name="sensor_d435" params="parent *origin name:=camera use_nominal_extrinsics:=false add_plug:=false use_mesh:=true L2_network_id:=network_level L1_network_id:=device_level L2_id:=sensor_d435_L2 L1_id:=sensor_d435_L1">
+  <xacro:macro name="sensor_d435" params="parent *origin name:=camera use_nominal_extrinsics:=false add_plug:=false use_mesh:=true L2_network_id:=${name}_network_level L1_network_id:=${name}_device_level L2_id:=sensor_d435_L2 L1_id:=sensor_d435_L1">
+    <xacro:arg name="add_plug" default="false" />
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
     <!-- The following values are approximate, and the camera node
@@ -51,7 +55,7 @@ aluminum peripherial evaluation case.
     <!-- convenience precomputation to avoid clutter-->
     <xacro:property name="d435_mesh_x_offset" value="${d435_cam_mount_from_center_offset-d435_glass_to_front-d435_zero_depth_to_glass}"/>
 
-    <!-- The following offset is relative the the physical D435 camera peripherial
+    <!-- The following offset is relative to the physical D435 camera peripherial
   	camera tripod mount -->
     <xacro:property name="d435_cam_depth_px" value="${d435_cam_mount_from_center_offset}"/>
     <xacro:property name="d435_cam_depth_py" value="0.0175"/>
@@ -165,7 +169,7 @@ aluminum peripherial evaluation case.
       <link name="${name}_color_optical_frame"/>
     </xacro:if>
 
-    <xacro:if value="${add_plug}">
+    <xacro:if value="${arg add_plug}">
       <xacro:usb_plug parent="${name}_link" name="${name}_usb_plug">
         <origin xyz="${d435_cam_mount_from_center_offset - 0.02095} ${-d435_cam_depth_py - 0.0353} 0" rpy="0 0 0"/>
       </xacro:usb_plug>
@@ -173,8 +177,9 @@ aluminum peripherial evaluation case.
 
     <yang>
       <!-- Realsense D435i L2 network topology -->
-      <network>
+      <robot-network:networks>
         <network-id>${L2_network_id}</network-id>
+        <layer2:l2-topology><element>template</element></layer2:l2-topology>
         <supporting-network>
           <network-ref>${L1_network_id}</network-ref>
           <tf-parent>${parent}</tf-parent>
@@ -187,19 +192,22 @@ aluminum peripherial evaluation case.
           </supporting-node>
           <xacro:usb30_L2 id="usb_1" supporting_network="${L1_network_id}" supporting_node="${L1_id}" supporting_tp="usb-typec_1"/>
         </node>
-      </network>
+      </robot-network:networks>
 
       <!-- Realsense D435i L1 network topology -->
-      <network>
+      <robot-network:networks>
         <network-id>${L1_network_id}</network-id>
+        <layer1:l1-topology><element>template</element></layer1:l1-topology>
         <node>
           <node-id>${L1_id}</node-id>
           <layer1:l1-node-attributes>
             <device-type>camera</device-type>
+            <phy-port-num>1</phy-port-num>
+            <wireless-access>0</wireless-access>
           </layer1:l1-node-attributes>
           <xacro:usb30_L1 id="usb_1" connector_type="usb_type-C" connector_format="female"/>
         </node>
-      </network>
+      </robot-network:networks>
     </yang>
 
   </xacro:macro>
