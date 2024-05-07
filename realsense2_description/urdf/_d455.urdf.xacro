@@ -222,6 +222,10 @@ aluminum peripherial evaluation case.
         </supporting-network>
         <node>
           <node-id>${L2_id}</node-id>
+          <layer2:l2-node-attributes>
+            <bandwidth>5</bandwidth>
+            <delay>5</delay>
+          </layer2:l2-node-attributes>
           <supporting-node>
             <network-ref>${L1_network_id}</network-ref>
             <node-ref>${L1_id}</node-ref>
@@ -229,6 +233,8 @@ aluminum peripherial evaluation case.
           <xacro:usb30_L2 id="usb_1" supporting_network="${L1_network_id}" supporting_node="${L1_id}" supporting_tp="usb-typec_1"/>
         </node>
       </robot-network:networks>
+
+
 
       <!-- Realsense D455 L1 network topology -->
       <robot-network:networks>
