@@ -227,7 +227,12 @@ aluminum peripherial evaluation case.
             <network-ref>${name}-usb-typec-supporting-network</network-ref>
             <node-ref>${name}-usb-typec-supporting-node</node-ref>
           </supporting-node>
-                    
+
+          <dl:device-layer-node-attributes xmlns:dl="urn:ietf:params:xml:ns:yang:device-layer">
+            <dl:device-name>${name}-0</dl:device-name>
+            <dl:device-type>camera</dl:device-type>
+          </dl:device-layer-node-attributes>
+
           <xacro:usb_typec parent="world" id="0" />
         </node>
 
