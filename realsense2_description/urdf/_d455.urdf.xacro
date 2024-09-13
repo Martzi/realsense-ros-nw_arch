@@ -232,12 +232,12 @@ aluminum peripherial evaluation case.
             <dl:device-name>${name}-0</dl:device-name>
             <dl:device-type>camera</dl:device-type>
           </dl:device-layer-node-attributes>
-
-          <xacro:usb_typec parent="world" id="0" />
+      
         </node>
-
       </network>
     </yang>
+    
+    <xacro:usb_typec parent="world" id="0" />
 
   </xacro:macro>
 </robot>
