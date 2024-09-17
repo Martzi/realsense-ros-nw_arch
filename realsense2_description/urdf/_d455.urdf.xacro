@@ -209,13 +209,6 @@ aluminum peripherial evaluation case.
     </xacro:if>
 
       <!-- Intel RealSense D455 network topology -->
-      <network>
-        <network-id>${name}-network</network-id>
-        
-        <network-types>
-          <dl:device-layer-topology xmlns:dl="urn:ietf:params:xml:ns:yang:device-layer"/>
-        </network-types>
-
         <node>
           <node-id>${name}-usb-typec-node</node-id>
 
@@ -225,9 +218,7 @@ aluminum peripherial evaluation case.
           </dl:device-layer-node-attributes>
         
           <xacro:usb_typec parent="world" id="0" />
-
         </node>
-      </network>
 
   </xacro:macro>
 </robot>
