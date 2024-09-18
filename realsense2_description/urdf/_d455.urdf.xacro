@@ -28,7 +28,7 @@ aluminum peripherial evaluation case.
   <xacro:include filename="$(find realsense2_description)/urdf/_usb_plug.urdf.xacro" />
   <xacro:include filename="$(find interface_description)/urdf/usb-typec.urdf.xacro" />
 
-  <xacro:macro name="sensor_d455" params="parent *origin name:=camera use_nominal_extrinsics:=false L2_network_id:=sensor_d455_network_level L1_network_id:=sensor_d455_device_level L2_id:=sensor_d455_L2 L1_id:=sensor_d455_L1">
+  <xacro:macro name="sensor_d455" params="parent *origin name:=camera use_nominal_extrinsics:=false id:=0">
     <xacro:arg name="add_plug" default="false" />
     <xacro:property name="M_PI" value="3.1415926535897931" />
 
@@ -217,7 +217,7 @@ aluminum peripherial evaluation case.
         <dl:device-type>camera</dl:device-type>
       </dl:device-layer-node-attributes>
     
-      <xacro:usb_typec parent="world" id="0" />
+      <xacro:usb_typec parent="${name}_link" prefix="${name}-${id}" id="0" origin_xyz="0.075 0.119 0.0199" origin_rpy="1.5707963 1.5707963 0"/>
     </node>
 
   </xacro:macro>
