@@ -210,11 +210,11 @@ aluminum peripherial evaluation case.
 
     <!-- Intel RealSense D455 network topology -->
     <node>
-      <node-id>${name}-usb-typec-node</node-id>
+      <node-id>${name}-${id}</node-id>
 
       <dl:device-layer-node-attributes xmlns:dl="urn:ietf:params:xml:ns:yang:device-layer">
         <dl:device-name>${name}-0</dl:device-name>
-        <dl:device-type>camera</dl:device-type>
+        <dl:device-type>realsense-d455-camera</dl:device-type>
       </dl:device-layer-node-attributes>
     
       <xacro:usb_typec parent="${name}_link" prefix="${name}-${id}" id="0" origin_xyz="0.075 0.119 0.0199" origin_rpy="1.5707963 1.5707963 0"/>
