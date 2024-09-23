@@ -213,11 +213,12 @@ aluminum peripherial evaluation case.
       <node-id>${name}-${id}</node-id>
 
       <dl:device-layer-node-attributes xmlns:dl="urn:ietf:params:xml:ns:yang:device-layer">
-        <dl:device-name>${name}-0</dl:device-name>
-        <dl:device-type>realsense-d455-camera</dl:device-type>
+        <dl:device-name>realsense-d455-camera</dl:device-name>
+        <dl:device-type>d455</dl:device-type>
+        <dl:weight>72</dl:weight>
       </dl:device-layer-node-attributes>
     
-      <xacro:usb_typec parent="${name}_link" prefix="${name}-${id}" id="0" origin_xyz="0.075 0.119 0.0199" origin_rpy="1.5707963 1.5707963 0"/>
+      <xacro:usb_typec parent="${name}_link" prefix="${name}-${id}" id="0" origin_xyz="-0.015 -0.08 -0.005" origin_rpy="0 3.14 1.57 "/>
     </node>
 
   </xacro:macro>
