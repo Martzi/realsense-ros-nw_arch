@@ -28,7 +28,7 @@ aluminum peripherial evaluation case.
   <xacro:include filename="$(find realsense2_description)/urdf/_usb_plug.urdf.xacro" />
   <xacro:include filename="$(find interface_description)/urdf/usb-typec.urdf.xacro" />
 
-  <xacro:macro name="sensor_d455" params="parent *origin name:=d455 use_nominal_extrinsics:=false id:=0"
+  <xacro:macro name="sensor_d455" params="parent *origin name:=d455 use_nominal_extrinsics:=false add_plug:=false id:=0"
     xmlns:nw="urn:ietf:params:xml:ns:yang:ietf-network">
     <xacro:arg name="add_plug" default="false" />
     <xacro:property name="M_PI" value="3.1415926535897931" />
@@ -70,10 +70,10 @@ aluminum peripherial evaluation case.
     <joint name="${name}_link_joint" type="fixed">
       <origin xyz="${d455_mesh_x_offset} ${d455_cam_depth_py} ${d455_cam_depth_pz}" rpy="0 0 0"/>
       <parent link="${name}_bottom_screw_frame"/>
-      <child link="${name}_link" />
+      <child link="${name}-${id}-link" />
     </joint>
 
-    <link name="${name}_link">
+    <link name="${name}-${id}-link">
       <visual>
         <!-- the mesh origin is at front plate in between the two infrared camera axes -->
         <!-- <origin xyz="${d455_zero_depth_to_glass-d455_cam_depth/2} ${-d455_cam_depth_py} 0" rpy="0 0 0"/> -->
@@ -103,7 +103,7 @@ aluminum peripherial evaluation case.
       <!-- camera depth joints and links -->
       <joint name="${name}_depth_joint" type="fixed">
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <parent link="${name}_link"/>
+        <parent link="${name}-${id}-link"/>
         <child link="${name}_depth_frame" />
       </joint>
       <link name="${name}_depth_frame"/>
@@ -118,7 +118,7 @@ aluminum peripherial evaluation case.
       <!-- camera left IR joints and links -->
       <joint name="${name}_infra1_joint" type="fixed">
         <origin xyz="0 ${d455_cam_depth_to_infra1_offset} 0" rpy="0 0 0" />
-        <parent link="${name}_link" />
+        <parent link="${name}-${id}-link" />
         <child link="${name}_infra1_frame" />
       </joint>
       <link name="${name}_infra1_frame"/>
@@ -133,7 +133,7 @@ aluminum peripherial evaluation case.
       <!-- camera right IR joints and links -->
       <joint name="${name}_infra2_joint" type="fixed">
         <origin xyz="0 ${d455_cam_depth_to_infra2_offset} 0" rpy="0 0 0" />
-        <parent link="${name}_link" />
+        <parent link="${name}-${id}-link" />
         <child link="${name}_infra2_frame" />
       </joint>
       <link name="${name}_infra2_frame"/>
@@ -148,7 +148,7 @@ aluminum peripherial evaluation case.
       <!-- camera color joints and links -->
       <joint name="${name}_color_joint" type="fixed">
         <origin xyz="0 ${d455_cam_depth_to_color_offset} 0" rpy="0 0 0" />
-        <parent link="${name}_link" />
+        <parent link="${name}-${id}-link" />
         <child link="${name}_color_frame" />
       </joint>
       <link name="${name}_color_frame"/>
@@ -174,7 +174,7 @@ aluminum peripherial evaluation case.
 
       <joint name="${name}_accel_joint" type="fixed">
         <origin xyz = "${d455_imu_px} ${d455_imu_py} ${d455_imu_pz}" rpy = "0 0 0" />
-        <parent link="${name}_link" />
+        <parent link="${name}-${id}-link" />
         <child link="${name}_accel_frame" />
       </joint>
 
@@ -186,7 +186,7 @@ aluminum peripherial evaluation case.
 
       <joint name="${name}_gyro_joint" type="fixed">
         <origin xyz = "${d455_imu_px} ${d455_imu_py} ${d455_imu_pz}" rpy = "0 0 0" />
-        <parent link="${name}_link" />
+        <parent link="${name}-${id}-link" />
         <child link="${name}_gyro_frame" />
       </joint>
 
@@ -204,22 +204,21 @@ aluminum peripherial evaluation case.
     </xacro:if>
 
     <xacro:if value="$(arg add_plug)">
-      <xacro:usb_plug parent="${name}_link" name="${name}_usb_plug">
+      <xacro:usb_plug parent="${name}-${id}-link" name="${name}_usb_plug">
         <origin xyz="${-0.00406-d455_cam_depth_px} ${-0.03701-d455_cam_depth_py} ${-d455_cam_depth_pz}" rpy="${M_PI/2} 0 0"/>
       </xacro:usb_plug>
     </xacro:if>
 
     <!-- Intel RealSense D455 network topology -->
     <node>
-      <node-id>${name}-${id}</node-id>
+      <node-id>${name}-${id}-node</node-id>
 
       <dl:device-layer-node-attributes xmlns:dl="urn:ietf:params:xml:ns:yang:device-layer">
         <dl:device-name>realsense-d455-camera</dl:device-name>
         <dl:device-type>d455</dl:device-type>
-        <dl:weight>72</dl:weight>
       </dl:device-layer-node-attributes>
     
-      <xacro:usb_typec parent="${name}_link" prefix="${name}-${id}" id="0" origin_xyz="-0.015 -0.08 -0.005" origin_rpy="0 3.14 1.57 "/>
+      <xacro:usb_typec parent="${name}-${id}-link" prefix="${name}-${id}" id="0" origin_xyz="-0.015 -0.08 -0.005" origin_rpy="0 3.14 1.57 "/>
     </node>
 
   </xacro:macro>

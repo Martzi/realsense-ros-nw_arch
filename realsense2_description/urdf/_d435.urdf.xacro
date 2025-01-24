@@ -174,17 +174,16 @@ aluminum peripherial evaluation case.
       </xacro:usb_plug>
     </xacro:if>
 
-    <!-- Intel RealSense D455 network topology -->
+    <!-- Intel RealSense D435 network topology -->
     <node>
-      <node-id>${name}-${id}</node-id>
+      <node-id>${name}-${id}-node</node-id>
 
       <dl:device-layer-node-attributes xmlns:dl="urn:ietf:params:xml:ns:yang:device-layer">
         <dl:device-name>realsense-d435-camera</dl:device-name>
         <dl:device-type>d435</dl:device-type>
-        <dl:weight>72</dl:weight>
       </dl:device-layer-node-attributes>
     
-      <xacro:usb_typec parent="${name}_link" prefix="${name}-${id}" id="0" origin_xyz="-0.0167 -0.0435 0.0" origin_rpy="0 -1.57 1.57 "/>
+      <xacro:usb_typec parent="${name}-${id}-link" prefix="${name}-${id}" id="0" origin_xyz="-0.0167 -0.0435 0.0" origin_rpy="0 -1.57 1.57 "/>
     </node>
 
   </xacro:macro>
