@@ -218,7 +218,23 @@ aluminum peripherial evaluation case.
         <dl:device-type>d455</dl:device-type>
       </dl:device-layer-node-attributes>
     
-      <xacro:usb_typec parent="${name}-${id}-link" prefix="${name}-${id}" id="0" origin_xyz="-0.015 -0.08 -0.005" origin_rpy="0 3.14 1.57 "/>
+      <xacro:usb-typec parent="${name}-${id}-link" prefix="${name}-${id}" id="0" origin_xyz="-0.015 -0.08 -0.005" origin_rpy="0 3.14 1.57 "/>
+    </node>
+
+    <!-- Supporting node for the device-layer network -->
+    <node>
+      <node-id>${name}-${id}-supporting-node </node-id>
+      
+      <supporting-node>
+        <network-ref>device-layer-network</network-ref>
+        <node-ref>${name}-${id}</node-ref>
+      </supporting-node>
+
+      <nl:network-layer-node-attributes xmlns:nl="urn:ietf:params:xml:ns:yang:network-layer">
+        <nl:node-name>nuc-control-node</nl:node-name>
+        <nl:node-type>generic</nl:node-type>
+      </nl:network-layer-node-attributes>  
+
     </node>
 
   </xacro:macro>

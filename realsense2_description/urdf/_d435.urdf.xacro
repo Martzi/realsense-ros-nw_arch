@@ -183,7 +183,7 @@ aluminum peripherial evaluation case.
         <dl:device-type>d435</dl:device-type>
       </dl:device-layer-node-attributes>
     
-      <xacro:usb_typec parent="${name}-${id}-link" prefix="${name}-${id}" id="0" origin_xyz="-0.0167 -0.0435 0.0" origin_rpy="0 -1.57 1.57 "/>
+      <xacro:usb-typec parent="${name}-${id}-link" prefix="${name}-${id}" id="0" origin_xyz="-0.0167 -0.0435 0.0" origin_rpy="0 -1.57 1.57 "/>
     </node>
 
   </xacro:macro>
